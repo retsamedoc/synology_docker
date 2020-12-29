@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+   mqtt:
+      image: eclipse-mosquitto:latest
+      container_name: mqtt
+      restart: always
+      network_mode: host
+      ports:
+        - 1883/tcp
+        - 1883/udp
+        - 9001/tcp
+        - 9001/udp
+      volumes:
+        - /home/$USER/docker_files/mqtt/data:/mosquitto/data
+        - /home/$USER/docker_files/mqtt/config:/config
+        - /home/$USER/docker_files/mqtt/log:/mosquitto/log
+      environment:
+        - TZ: America/Phoenix
+      healthcheck:
+        test: ["CMD-SHELL", "timeout 5 mosquitto_sub -t '$$SYS/#' -C 1 | grep -v Error || exit 1"]
+        interval: 30s
+        timeout: 10s
+        retries: 6

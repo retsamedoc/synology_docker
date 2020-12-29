@@ -1,0 +1,43 @@
+version: "2"
+
+services:
+  home-assistant:
+     extends:
+        service: home-assistant
+        file: home-assistant/docker-compose.yaml
+     depends_on:
+        - mqtt
+     networks:
+        home:
+            ipv4_address: 10.10.10.200
+
+   mqtt:
+     extends:
+        service: mqtt
+        file: mqtt/docker-compose.yaml
+      networks:
+         home:
+            ipv4_address: 10.10.10.199
+
+   ring-alarm:
+     extends:
+        service: ring-alarm
+        file: ring-alarm/docker-compose.yaml
+      depends_on:
+         - mqtt
+      networks:
+         home:
+            ipv4_address: 10.10.10.198
+
+
+networks:
+  docker_vlan:
+    driver: macvlan
+    driver_opts:
+      parent: ovs_eth0
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24
+          gateway: 10.10.10.1
+          ip-range: 10.10.10.192/26
+

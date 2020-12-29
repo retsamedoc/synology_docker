@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+   ring-alarm:
+      image: retsamedoc/ring-alarm-mqtt:latest
+      container_name: ring-alarm
+      restart: always
+      network_mode: host
+      ports:
+        - 55123/tcp
+      volumes:
+        - ring-alarm/config:/etc/ring-mqtt
+      environment:
+        - TZ: America/Phoenix
