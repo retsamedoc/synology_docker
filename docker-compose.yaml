@@ -29,7 +29,5 @@ networks:
          config:
               - subnet: 10.10.10.0/24
                 gateway: 10.10.10.1
-#           ip-range: 10.10.10.192/26
 
-
-# vim: set ts=3 sw=3 et
+# vim: set ts=3 sw=3 et:

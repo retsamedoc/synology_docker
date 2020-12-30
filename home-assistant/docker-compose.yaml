@@ -30,4 +30,4 @@ services:
            max-size: "10m"
            max-file: "3"
 
-# vim: set ts=3 sw=3 et
+# vim: set ts=3 sw=3 et:

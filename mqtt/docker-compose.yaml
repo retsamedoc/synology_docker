@@ -15,4 +15,4 @@ services:
          timeout: 10s
          retries: 6
 
-# vim: set ts=3 sw=3 et
+# vim: set ts=3 sw=3 et:
