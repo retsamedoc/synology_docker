@@ -1,17 +1,18 @@
-version: "2"
+version: "2.4"
 
 services:
    mqtt:
-      image: eclipse-mosquitto:latest
+      image: eclipse-mosquitto
       container_name: mqtt
       restart: always
-      network_mode: host
       ports:
-        - 1883/tcp
+         - 1883/tcp
       volumes:
-        - ./config:/config
+         - ./config:/config
       healthcheck:
-        test: ["CMD-SHELL", "timeout 5 mosquitto_sub -t '$$SYS/#' -C 1 | grep -v Error || exit 1"]
-        interval: 30s
-        timeout: 10s
-        retries: 6
+         test: ["CMD-SHELL", "timeout 5 mosquitto_sub -t '$$SYS/#' -C 1 | grep -v Error || exit 1"]
+         interval: 30s
+         timeout: 10s
+         retries: 6
+
+# vim: set ts=3 sw=3 et

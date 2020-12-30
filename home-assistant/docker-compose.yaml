@@ -1,13 +1,14 @@
-version: "2"
+version: "2.4"
 
 services:
-  homeassistant:
-     conatiner_name: homeassistant
-     image: retsamedoc/homeassistant:latest
+  home-assistant:
+     container_name: home-assistant
+     image: retsamedoc/home-assistant
      privileged: false
      restart: unless-stopped
      hostname: homeassistant
      domainname: digitalactionsproject.org
+     mem_limit: 512m
      mac_address: 02:42:c0:de:ad:01
      cap_add:
         - NET_ADMIN
@@ -16,12 +17,9 @@ services:
         - 443/tcp
         - 8123/tcp
      volumes:
-        - config/home-assistant:/config
+        - ./config:/config
      environment:
         TZ: America/Phoenix
-     depends_on:
-        mqtt:
-           condition: service_started
      healthcheck:
         test: ["CMD", "curl", "-f", "http://127.0.0.1:8123"]
         interval: 30s
@@ -32,3 +30,4 @@ services:
            max-size: "10m"
            max-file: "3"
 
+# vim: set ts=3 sw=3 et

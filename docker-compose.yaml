@@ -1,43 +1,35 @@
-version: "2"
+version: "2.4"
 
 services:
-  home-assistant:
-     extends:
-        service: home-assistant
-        file: home-assistant/docker-compose.yaml
-     depends_on:
-        - mqtt
-     networks:
-        home:
+   home-assistant:
+      extends:
+         service: home-assistant
+         file: home-assistant/docker-compose.yaml
+      networks:
+         docker_vlan:
             ipv4_address: 10.10.10.200
+      depends_on:
+         mqtt:
+            condition: service_started
 
    mqtt:
-     extends:
-        service: mqtt
-        file: mqtt/docker-compose.yaml
+      extends:
+         service: mqtt
+         file: mqtt/docker-compose.yaml
       networks:
-         home:
+         docker_vlan:
             ipv4_address: 10.10.10.199
-
-   ring-alarm:
-     extends:
-        service: ring-alarm
-        file: ring-alarm/docker-compose.yaml
-      depends_on:
-         - mqtt
-      networks:
-         home:
-            ipv4_address: 10.10.10.198
-
-
+ 
 networks:
-  docker_vlan:
-    driver: macvlan
-    driver_opts:
-      parent: ovs_eth0
-    ipam:
-      config:
-        - subnet: 10.10.10.0/24
-          gateway: 10.10.10.1
-          ip-range: 10.10.10.192/26
+   docker_vlan:
+      driver: macvlan
+      driver_opts:
+         parent: ovs_eth0
+      ipam:
+         config:
+              - subnet: 10.10.10.0/24
+                gateway: 10.10.10.1
+#           ip-range: 10.10.10.192/26
 
+
+# vim: set ts=3 sw=3 et
