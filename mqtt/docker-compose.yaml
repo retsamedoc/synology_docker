@@ -8,11 +8,13 @@ services:
       ports:
          - 1883/tcp
       volumes:
-         - ./config:/config
-      healthcheck:
-         test: ["CMD-SHELL", "timeout 5 mosquitto_sub -t '$$SYS/#' -C 1 | grep -v Error || exit 1"]
-         interval: 30s
-         timeout: 10s
-         retries: 6
+         - ./config:/mosquitto/config
+         - ./data:/mosquitto/data
+         - ./log:/mosquitto/log
+#      healthcheck:
+#         test: ["CMD-SHELL", "timeout 5 mosquitto_sub -t '$$SYS/#' -C 1 | grep -v Error || exit 1"]
+#         interval: 30s
+#         timeout: 10s
+#         retries: 6
 
-# vim: set ts=3 sw=3 et:
+# vim: set ts=3 sw=3 et
