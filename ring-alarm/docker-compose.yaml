@@ -9,6 +9,11 @@ services:
       ports:
         - 55123/tcp
       volumes:
-        - ring-alarm/config:/etc/ring-mqtt
+        - ./config:/etc/ring-mqtt
       environment:
         - TZ: America/Phoenix
+      env_file:
+        - ./.env
+
+#
+# vim: set ts=3 sw=3 et:

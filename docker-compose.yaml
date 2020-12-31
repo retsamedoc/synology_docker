@@ -19,7 +19,15 @@ services:
       networks:
          docker_vlan:
             ipv4_address: 10.10.10.199
- 
+
+   ring-alarm:
+      extends:
+         service: ring-alarm
+         file: ring-alarm/docker-compose.yaml
+      networks:
+         docker_vlan:
+            ipv4_address: 10.10.10.198
+
 networks:
    docker_vlan:
       driver: macvlan
@@ -29,5 +37,7 @@ networks:
          config:
               - subnet: 10.10.10.0/24
                 gateway: 10.10.10.1
+#           ip-range: 10.10.10.192/26
 
+#
 # vim: set ts=3 sw=3 et:
